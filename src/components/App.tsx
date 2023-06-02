@@ -25,6 +25,8 @@ export const App: React.FC = () => {
     dispatch(refreshUser());
   }, [dispatch]);
 
+  //
+
   return !isRefreshing ? (
     <Routes>
       <Route path="/" element={<Layout />}>
