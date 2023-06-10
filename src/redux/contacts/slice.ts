@@ -1,18 +1,18 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import type { BaseQueryFn } from "@reduxjs/toolkit/query";
-import axios from "axios";
-import type { AxiosRequestConfig, AxiosError } from "axios";
-import { IContact } from "types";
+import { createApi } from '@reduxjs/toolkit/query/react';
+import type { BaseQueryFn } from '@reduxjs/toolkit/query';
+import axios from 'axios';
+import type { AxiosRequestConfig, AxiosError } from 'axios';
+import { IContact } from 'types';
 
 const axiosBaseQuery =
   (
-    { baseUrl }: { baseUrl: string } = { baseUrl: "" }
+    { baseUrl }: { baseUrl: string } = { baseUrl: '' }
   ): BaseQueryFn<
     {
       url: string;
-      method: AxiosRequestConfig["method"];
-      data?: AxiosRequestConfig["data"];
-      params?: AxiosRequestConfig["params"];
+      method: AxiosRequestConfig['method'];
+      data?: AxiosRequestConfig['data'];
+      params?: AxiosRequestConfig['params'];
     },
     unknown,
     unknown
@@ -32,40 +32,39 @@ const axiosBaseQuery =
     }
   };
 
+type UpdateContact = { id: string; data: Partial<IContact> };
+
 export const contactsApi = createApi({
-  reducerPath: "contactsApi",
+  reducerPath: 'contactsApi',
   baseQuery: axiosBaseQuery(),
-  tagTypes: ["Contacts"],
-  endpoints: (builder) => ({
+  tagTypes: ['Contacts'],
+  endpoints: builder => ({
     fetchContacts: builder.query<IContact[], void>({
-      query: () => ({ url: "contacts", method: "get" }),
-      providesTags: ["Contacts"],
+      query: () => ({ url: 'contacts', method: 'get' }),
+      providesTags: ['Contacts'],
     }),
-    addContact: builder.mutation<IContact, Omit<IContact, "id">>({
-      query: (data) => ({
-        url: "contacts",
-        method: "post",
+    addContact: builder.mutation<IContact, Omit<IContact, 'id'>>({
+      query: data => ({
+        url: 'contacts',
+        method: 'post',
         data,
       }),
-      invalidatesTags: ["Contacts"],
+      invalidatesTags: ['Contacts'],
     }),
     deleteContact: builder.mutation<IContact, string>({
-      query: (id) => ({
+      query: id => ({
         url: `contacts/${id}`,
-        method: "delete",
+        method: 'delete',
       }),
-      invalidatesTags: ["Contacts"],
+      invalidatesTags: ['Contacts'],
     }),
-    updateContact: builder.mutation<
-      IContact,
-      { id: string; data: Partial<IContact> }
-    >({
+    updateContact: builder.mutation<IContact, UpdateContact>({
       query: ({ id, data }) => ({
         url: `contacts/${id}`,
-        method: "patch",
+        method: 'patch',
         data,
       }),
-      invalidatesTags: ["Contacts"],
+      invalidatesTags: ['Contacts'],
     }),
   }),
 });

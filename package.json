@@ -2,7 +2,7 @@
   "name": "react-hw-ts-phonebook",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://MykytaOlenykov.github.io/react-hw-ts-phonebook/",
+  "homepage": ".",
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
     "@reduxjs/toolkit": "^1.9.5",
